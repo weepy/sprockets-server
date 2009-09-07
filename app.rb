@@ -26,7 +26,7 @@ get /^\/$|\/\?(.+)/ do
     html += "<ul>"
     files.each do |f|
       l = f.gsub(path, "")
-      html += "<li><a href='#{l}'>#{l}</a></li>"
+      html += "<li><a href='#{l}'>#{l.gsub("/", " : ")}</a></li>"
     end
     html += "</ul>"
   end
@@ -34,9 +34,11 @@ get /^\/$|\/\?(.+)/ do
   html
 end
 
+
 get '/*/*.html' do
   time = Time.now
-  url = request.fullpath
+  url = request.fullpath.split("?")[0]
+  search = url.split("?")[1]
   
   file, root, full_path = find_file(url)
   
@@ -53,8 +55,7 @@ get '/*/*.html' do
 
     secretary.preprocessor.source_files.each do |source_file|
       to_load << source_file.pathname.to_s if source_file.contains_source?
-    end  
-
+    end
         
     to_load = to_load.map do |s| 
       LOAD_PATHS.each { |ss| s.gsub!(ss,"") }

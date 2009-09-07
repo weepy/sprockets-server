@@ -1,4 +1,4 @@
 Settings = {
-  :paths => ["~/Projects/yumoov/jmoov/", "~/Sprockets/"],
+  :paths => ["~/Sprockets/"],
   :cache => ".sprocket.js"
 }
